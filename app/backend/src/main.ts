@@ -7,12 +7,22 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import * as dotenv from 'dotenv';
+import { appExceptionsFilter } from './customFilter/appExceptionsFilter';
 
 dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+
+  // Enable CORS for frontend requests
+  app.enableCors({
+    origin: ['http://localhost:4200'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  });
+  app.useGlobalFilters(new appExceptionsFilter());
+
   const port = process.env.PORT || 3000;
   console.log(port);
   await app.listen(port);
