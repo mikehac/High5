@@ -1,28 +1,15 @@
 // Uncomment this line to use CSS modules
-// import styles from './app.module.scss';
+import './app.module.scss';
 
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import { StockBrowser } from './components/stockBrowser';
+import UserPortfolio from './components/userPortfolio';
 
 export function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <div>
-            This is the generated root route.{' '}
-            <Link to="/page-2">Click here for page 2.</Link>
-          </div>
-        }
-      />
-      <Route
-        path="/page-2"
-        element={
-          <div>
-            <Link to="/">Click here to go back to root page.</Link>
-          </div>
-        }
-      />
+      <Route path="/browse" element={<StockBrowser />} />
+      <Route path="/myportfolio" element={<UserPortfolio />} />
     </Routes>
   );
 }
