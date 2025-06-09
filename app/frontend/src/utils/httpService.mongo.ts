@@ -1,14 +1,12 @@
 import { getHeaders } from './headers';
+import { StockItem } from '@high5/interfaces';
 
+// The following userId is a placeholder.
+// In a real application, it would be replaced with the actual user ID
+export const DUMMY_USER_ID = '5f8d0c2b9b1e8c001f8b4567';
 export function postStockByUser(
   userId: string,
-  stockItem: {
-    currency: string;
-    exchange: string;
-    exchangeFullName: string;
-    name: string;
-    symbol: string;
-  }
+  stockItem: StockItem
 ): Promise<any> {
   const baseUrl = process.env.BASE_URL;
   const url = `${baseUrl}mongo/${userId}`;

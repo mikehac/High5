@@ -1,6 +1,7 @@
-import { Input, List } from 'antd';
+import { Input } from 'antd';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { httpGet } from '../../utils/httpService';
+import StockList from './stockList';
 
 export function StockBrowser() {
   const [search, setSearch] = useState<string>('');
@@ -67,24 +68,7 @@ export function StockBrowser() {
       {!loading && !error && searchResult.length > 0 && (
         <div className="search-results">
           <h3>Search Results</h3>
-          <List
-            size="small"
-            bordered
-            dataSource={searchResult}
-            renderItem={(item) => (
-              <List.Item>
-                <div className="item">
-                  <div>
-                    <strong>{item.symbol}</strong>: {item.name} -{' '}
-                    {item.exchange}
-                  </div>
-                  <div>
-                    <a href={`/stock/${item.symbol}`}>View Details</a>
-                  </div>
-                </div>
-              </List.Item>
-            )}
-          />
+          <StockList dataSource={searchResult} />
         </div>
       )}
     </section>

@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useStockQuoteStore } from '../stores/RootStore';
 import { Button } from 'antd';
+import { DUMMY_USER_ID, postStockByUser } from '../../utils/httpService.mongo';
 
 const StockDetails = observer(function StockDetails() {
   const { symbol } = useParams<{ symbol: string }>();
+  const location = useLocation();
   const stockQuoteStore = useStockQuoteStore();
+  const stockDataFromNav = location.state?.stockData;
   const quote = symbol ? stockQuoteStore.getQuote(symbol) : undefined;
 
   useEffect(() => {
@@ -15,7 +18,12 @@ const StockDetails = observer(function StockDetails() {
     }
   }, [quote, symbol, stockQuoteStore]);
 
-  function addToPortfolioEvent() {}
+  function addToPortfolioEvent() {
+    if (!quote) return;
+    console.log(stockDataFromNav);
+    postStockByUser(DUMMY_USER_ID, stockDataFromNav);
+  }
+
   if (!quote) return <p>Loading...</p>;
 
   return (
