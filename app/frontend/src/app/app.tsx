@@ -6,6 +6,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { StockBrowser } from './components/stockBrowser';
 import UserPortfolio from './components/userPortfolio';
 import Header from './components/header';
+import StockDetails from './components/stockDetails';
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
       </div>
       <Routes>
         <Route path="/" element={<Navigate to="/browse" replace />} />
+        <Route path="/stock/:symbol" element={<StockDetails />} />
         <Route path="/browse" element={<StockBrowser />} />
         <Route path="/myportfolio" element={<UserPortfolio />} />
       </Routes>

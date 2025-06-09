@@ -1,8 +1,6 @@
+import { Input, List } from 'antd';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { getFromApi } from '../../utils/httpService';
-import { Button, Input, List } from 'antd';
-//TODO: Refactor the folowing import, The App component should have the include of app.module.scss
-// import '../styles/StockBrowser.scss';
+import { httpGet } from '../../utils/httpService';
 import { StockItem } from '../interfaces/stockItem';
 
 export function StockBrowser() {
@@ -22,7 +20,7 @@ export function StockBrowser() {
       setError(null);
 
       try {
-        const searchStockResult = await getFromApi(query);
+        const searchStockResult = await httpGet('query', query);
         setSearchResult(
           Array.isArray(searchStockResult) ? searchStockResult : []
         );
@@ -47,9 +45,6 @@ export function StockBrowser() {
 
   function searchChangeHandler(event: ChangeEvent<HTMLInputElement>): void {
     setSearch(event.target.value);
-  }
-  function addToPortfolio(item: StockItem) {
-    console.log(item);
   }
 
   return (
@@ -85,12 +80,7 @@ export function StockBrowser() {
                     {item.exchange}
                   </div>
                   <div>
-                    <Button
-                      className="add-button"
-                      onClick={() => addToPortfolio(item)}
-                    >
-                      Add to portfolio
-                    </Button>
+                    <a href={`/stock/${item.symbol}`}>View Details</a>
                   </div>
                 </div>
               </List.Item>
