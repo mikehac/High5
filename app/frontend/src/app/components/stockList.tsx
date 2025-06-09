@@ -1,5 +1,6 @@
 import { StockItem } from '@high5/interfaces';
 import { Button, List } from 'antd';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   deleteStockByUser,
@@ -18,13 +19,20 @@ export default function StockList({
   const handleViewDetails = (item: any) => {
     navigate(`/stock/${item.symbol}`, { state: { stockData: item } });
   };
+
+  const [localSource, setLocalSource] = useState<StockItem[]>([]);
+  useEffect(() => {
+    setLocalSource(dataSource);
+  }, [dataSource]);
+
   const handleRemove = (item: StockItem) => {
     console.log('Remove stock:', item);
     deleteStockByUser(DUMMY_USER_ID, item.symbol).then((res) => {
       console.log('Stock removed:', res);
-      // Optionally, you can refresh the list or show a success message
-      // For example, you could trigger a state update to re-fetch the list
-      getStocksByUser(DUMMY_USER_ID).then((stocks) => {});
+      //TODO: Continue here!!!!!
+      getStocksByUser(DUMMY_USER_ID).then((stocks) => {
+        setLocalSource(stocks);
+      });
     });
   };
 
@@ -58,7 +66,7 @@ export default function StockList({
     <List
       size="small"
       bordered
-      dataSource={dataSource}
+      dataSource={localSource}
       renderItem={(item) => (
         <List.Item>
           <div className="item">
