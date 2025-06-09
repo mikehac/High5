@@ -1,0 +1,10 @@
+POST http://localhost:3000/api/mongo/testid
+Content-Type: application/json
+
+{
+  "currency":"USD",
+  "exchange":"NASDAQ",
+  "exchangeFullName":"NASDAQ Global Selct",
+  "name":"TCTM Kid IT Education Inc.",
+  "symbol":"TEDU"
+}
