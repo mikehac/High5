@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ExternalapiModule } from '../externalapi/externalapi.module';
+import { MongoModule } from '../mongo/mongo.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ExternalapiModule } from '../externalapi/externalapi.module';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(process.env.MONGO_DB ?? 'mongodb://nas:27017/'),
-    ExternalapiModule,
-  ],
+  imports: [ExternalapiModule, MongoModule],
   controllers: [AppController],
   providers: [AppService],
 })

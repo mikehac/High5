@@ -1,7 +1,6 @@
 import { Input, List } from 'antd';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { httpGet } from '../../utils/httpService';
-import { StockItem } from '../interfaces/stockItem';
 
 export function StockBrowser() {
   const [search, setSearch] = useState<string>('');

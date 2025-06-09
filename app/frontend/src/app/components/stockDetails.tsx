@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useStockQuoteStore } from '../stores/RootStore';
+import { Button } from 'antd';
 
 const StockDetails = observer(function StockDetails() {
   const { symbol } = useParams<{ symbol: string }>();
@@ -14,6 +15,7 @@ const StockDetails = observer(function StockDetails() {
     }
   }, [quote, symbol, stockQuoteStore]);
 
+  function addToPortfolioEvent() {}
   if (!quote) return <p>Loading...</p>;
 
   return (
@@ -26,6 +28,18 @@ const StockDetails = observer(function StockDetails() {
       <p>
         Change: {quote.change.toFixed(2)} ({quote.changesPercentage.toFixed(2)}
         %)
+      </p>
+      <p>
+        Volume:
+        {quote.volume.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+      </p>
+      <p>
+        <Button onClick={addToPortfolioEvent} className="add-btn">
+          Add to portfolio
+        </Button>
       </p>
     </div>
   );
