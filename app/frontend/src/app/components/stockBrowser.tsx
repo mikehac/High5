@@ -1,8 +1,9 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { getFromApi } from '../../utils/httpService';
-import { Input, List } from 'antd';
+import { Button, Input, List } from 'antd';
 //TODO: Refactor the folowing import, The App component should have the include of app.module.scss
-import '../styles/StockBrowser.scss';
+// import '../styles/StockBrowser.scss';
+import { StockItem } from '../interfaces/stockItem';
 
 export function StockBrowser() {
   const [search, setSearch] = useState<string>('');
@@ -47,20 +48,24 @@ export function StockBrowser() {
   function searchChangeHandler(event: ChangeEvent<HTMLInputElement>): void {
     setSearch(event.target.value);
   }
+  function addToPortfolio(item: StockItem) {
+    console.log(item);
+  }
 
   return (
     <section className="main-section">
-      <header>Stock Browser</header>
       <div>
-        <Input
-          type="text"
-          className="search-input"
-          placeholder="Search stock..."
-          onChange={searchChangeHandler}
-          value={search}
-        />
+        <header>Stock Browser</header>
+        <div>
+          <Input
+            type="text"
+            className="search-input"
+            placeholder="Search stock..."
+            onChange={searchChangeHandler}
+            value={search}
+          />
+        </div>
       </div>
-
       {loading && <div>Loading...</div>}
 
       {error && <div className="error">{error}</div>}
@@ -74,7 +79,20 @@ export function StockBrowser() {
             dataSource={searchResult}
             renderItem={(item) => (
               <List.Item>
-                <strong>{item.symbol}</strong>: {item.name} - {item.exchange}
+                <div className="item">
+                  <div>
+                    <strong>{item.symbol}</strong>: {item.name} -{' '}
+                    {item.exchange}
+                  </div>
+                  <div>
+                    <Button
+                      className="add-button"
+                      onClick={() => addToPortfolio(item)}
+                    >
+                      Add to portfolio
+                    </Button>
+                  </div>
+                </div>
               </List.Item>
             )}
           />

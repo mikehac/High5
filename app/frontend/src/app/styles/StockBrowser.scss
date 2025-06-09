@@ -1,10 +1,10 @@
-:host {
-  background-color: #e0dee5;
-  margin: 100px auto;
-}
+// :host {
+//   background-color: #e0dee5;
+//   margin: 100px auto;
+// }
 
 .main-section {
-  margin: 100px 500px;
+  margin: 20px 200px;
   display: flex;
   flex-direction: column;
   header {
@@ -18,8 +18,9 @@
 .search-results > h3 {
   text-align: center;
 }
+
 .search-input {
-  height: 10vh;
+  height: 50px;
   font-size: 30px;
   border-radius: 10px;
 }
@@ -30,4 +31,14 @@
 
 .ant-list-item:nth-child(even) {
   background-color: #e6f7ff; /* light blue */
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.add-button {
+  height: 35px;
 }
