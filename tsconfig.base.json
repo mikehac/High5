@@ -18,6 +18,10 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["development"]
+    "customConditions": ["development"],
+    "paths": {
+      "@high5/interfaces/*": ["./libs/iterfaces/*"]
+    },
+    "baseUrl": "."
   }
 }
