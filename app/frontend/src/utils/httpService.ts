@@ -1,13 +1,4 @@
-function getHeaders() {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
-  //TODO: If I have enough time to imlement the authorization, this method would be expended
-  return headers;
-}
-//http://localhost:3000/api/externalapi?query=p500
-//http://localhost:3000/api/externalapi/quote-stock/AAPL
+import { getHeaders } from './headers';
 
 export function httpGet(
   endpoint: 'query' | 'quote-stock',

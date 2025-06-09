@@ -8,3 +8,19 @@ Content-Type: application/json
   "name":"TCTM Kid IT Education Inc.",
   "symbol":"TEDU"
 }
+
+# {
+#   "currency": "NOK",
+#   "exchange": "OSL",
+#   "exchangeFullName": "Oslo Stock Exchange",
+#   "name": "Norwegian Air Shuttle ASA",
+#   "symbol": "NAS.OL"
+# }
+
+#####
+GET http://localhost:3000/api/mongo/testid
+Content-Type: application/json
+
+#####
+DELETE http://localhost:3000/api/mongo/testid/TEDU
+Content-Type: application/json
