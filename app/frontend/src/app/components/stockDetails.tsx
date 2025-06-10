@@ -1,15 +1,21 @@
 import { useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useStockQuoteStore } from '../stores/RootStore';
 import { Button } from 'antd';
-import { DUMMY_USER_ID, postStockByUser } from '../../utils/httpService.mongo';
+import {
+  deleteStockByUser,
+  DUMMY_USER_ID,
+  postStockByUser,
+} from '../../utils/httpService.mongo';
 
 const StockDetails = observer(function StockDetails() {
   const { symbol } = useParams<{ symbol: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   const stockQuoteStore = useStockQuoteStore();
   const stockDataFromNav = location.state?.stockData;
+  const cameFrom = location.state?.from.slice(1) || '/';
   const quote = symbol ? stockQuoteStore.getQuote(symbol) : undefined;
 
   useEffect(() => {
@@ -21,7 +27,18 @@ const StockDetails = observer(function StockDetails() {
   function addToPortfolioEvent() {
     if (!quote) return;
     console.log(stockDataFromNav);
-    postStockByUser(DUMMY_USER_ID, stockDataFromNav);
+    postStockByUser(DUMMY_USER_ID, stockDataFromNav).then((res) => {
+      // If I had more time, I would give a user notification that his portfolio was updated
+      navigate('/myportfolio');
+    });
+  }
+
+  function removeFromPortfolioEvent() {
+    if (!symbol) return;
+
+    deleteStockByUser(DUMMY_USER_ID, symbol).then((res) => {
+      navigate('/myportfolio');
+    });
   }
 
   if (!quote) return <div className="main-section">Loading...</div>;
@@ -45,9 +62,16 @@ const StockDetails = observer(function StockDetails() {
         })}
       </p>
       <p className="details">
-        <Button onClick={addToPortfolioEvent} className="add-btn">
-          Add to portfolio
-        </Button>
+        {cameFrom === 'myportfolio' && (
+          <Button onClick={removeFromPortfolioEvent} className="add-btn">
+            Remove from portfolio
+          </Button>
+        )}
+        {cameFrom === 'browse' && (
+          <Button onClick={addToPortfolioEvent} className="add-btn">
+            Add to portfolio
+          </Button>
+        )}
       </p>
     </div>
   );

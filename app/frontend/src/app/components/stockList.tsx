@@ -1,7 +1,7 @@
 import { StockItem } from '@high5/interfaces';
 import { Button, List } from 'antd';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   deleteStockByUser,
   DUMMY_USER_ID,
@@ -15,9 +15,12 @@ export default function StockList({
   dataSource: StockItem[];
   enableEdit?: boolean;
 }) {
+  const location = useLocation();
   const navigate = useNavigate();
   const handleViewDetails = (item: any) => {
-    navigate(`/stock/${item.symbol}`, { state: { stockData: item } });
+    navigate(`/stock/${item.symbol}`, {
+      state: { stockData: item, from: location.pathname },
+    });
   };
 
   const [localSource, setLocalSource] = useState<StockItem[]>([]);
@@ -28,8 +31,6 @@ export default function StockList({
   const handleRemove = (item: StockItem) => {
     console.log('Remove stock:', item);
     deleteStockByUser(DUMMY_USER_ID, item.symbol).then((res) => {
-      console.log('Stock removed:', res);
-      //TODO: Continue here!!!!!
       getStocksByUser(DUMMY_USER_ID).then((stocks) => {
         setLocalSource(stocks);
       });
