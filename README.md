@@ -1,109 +1,201 @@
-# High5
+# High5 - Stock Portfolio Application
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+A full-stack stock portfolio application built using Nx monorepo, React, NestJS, and MongoDB.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Project Overview
 
-## Generate a library
+High5 is a stock portfolio management application that allows users to:
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+- Search for stocks using a dedicated browser interface
+- View detailed stock information including current prices and changes
+- Add stocks to a personal portfolio
+- Manage their stock portfolio (view and remove stocks)
+
+The application is built as a monorepo using Nx, with separate frontend and backend applications.
+
+## Project Structure
+
+```
+High5/
+├── app/
+│   ├── backend/            # NestJS backend application
+│   │   ├── src/
+│   │   │   ├── app/        # Main application module
+│   │   │   ├── externalapi/ # Stock API integration
+│   │   │   ├── mongo/      # MongoDB integration
+│   │   │   └── schema/     # MongoDB schemas
+│   │   └── ...
+│   │
+│   ├── backend-e2e/        # Backend end-to-end tests
+│   │
+│   └── frontend/           # React frontend application
+│       ├── src/
+│       │   ├── app/
+│       │   │   ├── components/ # React components
+│       │   │   ├── interfaces/ # TypeScript interfaces
+│       │   │   ├── stores/     # MobX stores
+│       │   │   └── styles/     # SCSS stylesheets
+│       │   └── utils/          # Utility functions
+│       └── ...
+│
+├── interfaces/             # Shared interfaces library
+└── packages/               # Additional packages directory
 ```
 
-## Run tasks
+## Getting Started
 
-To build the library use:
+### Prerequisites
 
-```sh
-npx nx build pkg1
+- Node.js (LTS version recommended)
+- npm
+- MongoDB (local or cloud instance)
+
+### Environment Setup
+
+1. Create a `.env` file in the project root with the following variables:
+
+```
+API_KEY=your_financial_api_key
+API_BASE_URL=https://financialmodelingprep.com
+MONGO_CONNECTION_STRING=your_mongodb_connection_string
 ```
 
-To run any task with Nx use:
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+```sh
+npm install
+```
+
+## Running the Application
+
+To run the entire application (both frontend and backend) at once:
+
+```sh
+npm run start:all
+```
+
+This will start:
+
+- Frontend at: http://localhost:4200
+- Backend at: http://localhost:3000/api
+
+### Running Individual Applications
+
+To run the frontend only:
+
+```sh
+npx nx serve frontend
+```
+
+To run the backend only (with debugging enabled):
+
+```sh
+npx nx serve backend
+```
+
+## Development
+
+### Generate a Library
+
+```sh
+npx nx g @nx/js:lib packages/my-lib --publishable --importPath=@high5/my-lib
+```
+
+### Run Tasks
+
+To build a specific project:
+
+```sh
+npx nx build project-name
+```
+
+To run other tasks:
 
 ```sh
 npx nx <target> <project-name>
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks) or defined in the `project.json` or `package.json` files.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
-
-```
-npx nx release
-```
-
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+### Keep TypeScript Project References Up to Date
 
 ```sh
 npx nx sync
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+## Project Capabilities
 
-```sh
-npx nx sync:check
-```
+- **Stock Search**: Search for stocks by symbol or company name
+- **Stock Details**: View detailed information about a specific stock
+- **Portfolio Management**: Add, view, and remove stocks from your portfolio
+- **Responsive Design**: User-friendly interface that works on multiple device sizes
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+## Key Features
 
-## Set up CI!
+1. **Stock Browser**:
 
-### Step 1
+   - Search for stocks by name or symbol
+   - View basic stock information
+   - Navigate to detailed stock views
 
-To connect to Nx Cloud, run the following command:
+2. **Stock Details**:
 
-```sh
-npx nx connect
-```
+   - View comprehensive stock information
+   - See real-time price data
+   - Add stocks to your portfolio
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+3. **User Portfolio**:
+   - Manage your stock selections
+   - Remove stocks from your portfolio
+   - Access detailed information about your saved stocks
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Technical Architecture
 
-### Step 2
+### Frontend
 
-Use the following command to configure a CI workflow for your workspace:
+- **React**: UI library for building the user interface
+- **MobX**: State management library for managing application state
+- **React Router**: Navigation between different views
+- **Ant Design**: UI component library for a polished look and feel
+- **SCSS**: For component styling
+- **Vite**: Build tool for fast development and optimized production builds
 
-```sh
-npx nx g ci-workflow
-```
+### Backend
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- **NestJS**: Progressive Node.js framework for building efficient and scalable server-side applications
+- **MongoDB**: NoSQL database for storing user stock portfolios
+- **Mongoose**: MongoDB object modeling tool for Node.js
+- **External API Integration**: Connection to financial data providers for stock information
 
-## Install Nx Console
+### Shared
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+- **TypeScript**: For type-safe code across the entire application
+- **Nx**: For managing the monorepo and optimizing the development workflow
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## API Endpoints
 
-## Useful links
+- `GET /api/mongo/:userId` - Get a user's stock portfolio
+- `POST /api/mongo/:userId` - Add a stock to a user's portfolio
+- `DELETE /api/mongo/:userId/:stockSymbol` - Remove a stock from a user's portfolio
+- `GET /api/externalapi/search/:query` - Search for stocks by name or symbol
+- `GET /api/externalapi/quote/:symbol` - Get detailed information about a specific stock
 
-Learn more:
+## Built With
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Nx](https://nx.dev/) - Build system and monorepo tool
+- [React](https://reactjs.org/) - Frontend framework
+- [MobX](https://mobx.js.org/) - State management
+- [NestJS](https://nestjs.com/) - Backend framework
+- [MongoDB](https://www.mongodb.com/) - Database
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Useful Links
+
+- [Nx Documentation](https://nx.dev/nx-api/js)
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [MobX Documentation](https://mobx.js.org/README.html)
