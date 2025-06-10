@@ -10,7 +10,7 @@ import StockDetails from './components/stockDetails';
 
 export function App() {
   return (
-    <section className="main-section">
+    <section>
       <div>
         <Header />
       </div>
