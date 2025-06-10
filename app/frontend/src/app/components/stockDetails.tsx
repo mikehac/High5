@@ -24,27 +24,27 @@ const StockDetails = observer(function StockDetails() {
     postStockByUser(DUMMY_USER_ID, stockDataFromNav);
   }
 
-  if (!quote) return <p>Loading...</p>;
+  if (!quote) return <div className="main-section">Loading...</div>;
 
   return (
     <div className="main-section">
       <header>Stock details</header>
-      <h1>
+      <h1 className="details">
         {quote.name} ({quote.symbol})
       </h1>
-      <p>Price: ${quote.price.toFixed(2)}</p>
-      <p>
-        Change: {quote.change.toFixed(2)} ({quote.changesPercentage.toFixed(2)}
-        %)
+      <p className="details">Latest stock quote: ${quote.price.toFixed(2)}</p>
+      <p className="details">Change: {quote.change.toFixed(2)}</p>
+      <p className="details">
+        Percentage Change: {quote.changesPercentage.toFixed(2)}%
       </p>
-      <p>
-        Volume:
+      <p className="details">
+        Volume:{' '}
         {quote.volume.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}
       </p>
-      <p>
+      <p className="details">
         <Button onClick={addToPortfolioEvent} className="add-btn">
           Add to portfolio
         </Button>

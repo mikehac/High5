@@ -61,7 +61,7 @@ export function StockBrowser() {
           />
         </div>
       </div>
-      {loading && <div>Loading...</div>}
+      {loading && <div className="main-section">Loading...</div>}
 
       {error && <div className="error">{error}</div>}
 
