@@ -1,4 +1,3 @@
-// src/stocks/schemas/user-stock.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { StockItem } from '@high5/interfaces';
